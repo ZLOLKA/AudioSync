@@ -1,0 +1,29 @@
+body{
+	margin: 0em;
+	padding: 0em;
+	background-color: #D2B88E;
+}
+.header{
+	width: 100%;
+	border: solid 0px transparent;
+	background-color: #DFD7B2;
+	height: 80px;
+}
+.main{
+	width: 100%;
+	border: solid 0px transparent;
+	background-color: transparent;
+	height: auto;
+}
+.main_block{
+	width: 100%;
+	border: solid 0px transparent;
+	background-color: transparent;
+	height: 50em;
+}
+.footer{
+	width: 100%;
+	border: solid 0px transparent;
+	background-color: #DFD7B2;
+	height: 40px;
+}
