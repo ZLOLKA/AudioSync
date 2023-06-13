@@ -5,7 +5,7 @@
 
 namespace AudioSync {
 
-class InfoCSV_field;
+class BaseAudioInfo;
 
 namespace Diff {
     enum class Mode: std::uint8_t {
@@ -14,7 +14,7 @@ namespace Diff {
         , Modify
     };
 
-    class Type: public std::set<std::pair<Type, InfoCSV_field*>> {
+    class Type: public std::set<std::pair<Type, BaseAudioInfo*>> {
 
     };
 }

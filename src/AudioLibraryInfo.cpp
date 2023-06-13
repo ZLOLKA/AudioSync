@@ -2,16 +2,16 @@
 
 namespace AudioSync {
 
-bool InfoCSV_field::isDir() {
-    return not audio_info.has_value();
+bool AudioLibraryInfo::isDir() const {
+    return childs.size() != 0; 
 }
 
-AudioLibraryInfo AudioLibraryInfo::getOurAudioLibraryInfo() {
-    return {}; // TODO: not correct return value
+const decltype(AudioLibraryInfo::file_name)& AudioLibraryInfo::getFileName() const {
+    return isDir() ? file_name : data.file_name;
 }
 
-Diff::Type AudioLibraryInfo::gitDiff(const AudioLibraryInfo& /*other*/) const {
-    return {}; // TODO: not correct return value
+const decltype(AudioLibraryInfo::childs)& AudioLibraryInfo::getChilds() const {
+    return childs;
 }
 
 }

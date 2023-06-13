@@ -21,7 +21,7 @@ void baseSyncWith(AudioLibraryInfo& ourInfo) {
     for (auto& source: getSources()) {
         const auto* const source_ptr = source.get();
         const auto sourceInfo = (source_ptr->*getInfo)();
-        const auto difference = ourInfo.gitDiff(sourceInfo);
+        const auto difference = ourInfo.getDiffWith(sourceInfo);
 
         std::unique_ptr<UI_Base> ui = UI_Base::getUI();
         if (difference.empty()) {

@@ -1,36 +1,39 @@
 #pragma once
 
-#include <filesystem>
-#include <map>
+#include <memory>
+#include <set>
 #include <string>
-#include <optional>
 
+#include "BaseAudioInfo.hpp"
 #include "Diff.hpp"
 
 namespace AudioSync {
 
-class BaseAudioInfo {
-public:
-	std::string author;
-	std::string track_name;
-	std::string album;
-};
+class AudioLibraryInfo { // Tree-like structure
+private:
+    std::set<std::unique_ptr<AudioLibraryInfo>> childs;
+    union {
+        decltype(BaseAudioInfo::file_name) file_name;
+        BaseAudioInfo data;
+    };
 
-class InfoCSV_field {
-public:
-    std::filesystem::path file_name;
-    std::optional<BaseAudioInfo> audio_info;
-
-public:
-    bool isDir();
-};
-
-class AudioLibraryInfo: public std::vector<InfoCSV_field> {
 public:
     static AudioLibraryInfo getOurAudioLibraryInfo();
 
+    static AudioLibraryInfo deserialize(const std::string& serializedData);
+
 public:
-    Diff::Type gitDiff(const AudioLibraryInfo& other) const;
+    ~AudioLibraryInfo();
+
+    Diff::Type getDiffWith(const AudioLibraryInfo& other) const;
+
+    std::string serialize() const;
+
+    const decltype(file_name)& getFileName() const;
+
+    bool isDir() const;
+
+    const decltype(childs)& getChilds() const;
 };
 
 }
