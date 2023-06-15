@@ -1,6 +1,7 @@
 #include <cassert>
 #include <fstream>
 
+#include "ASSERT.hpp"
 #include "AudioLibraryInfo.hpp"
 #include "Settings.hpp"
 
@@ -24,7 +25,7 @@ AudioLibraryInfo AudioLibraryInfo::getOurAudioLibraryInfo() {
 
     std::filebuf fileBuf;
     if (not fileBuf.open(storageFileName, std::ios::in)) { // TODO: Rewrite as work in files
-        assert(!"Storage file not open");
+        ASSERT(false, "Storage file not open");
     }
     const auto fileSize = fileBuf.in_avail();
     std::string strFromFile(fileSize, '\0');
@@ -33,7 +34,7 @@ AudioLibraryInfo AudioLibraryInfo::getOurAudioLibraryInfo() {
         , fileSize
     );
     if (strFromFile.size() != countReadedChars) {
-        assert(!"Storage file not readed");
+        ASSERT(false, "Storage file not readed");
     }
 
     return deserialize(strFromFile);

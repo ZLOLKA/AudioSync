@@ -1,5 +1,6 @@
 #include <cassert>
 
+#include "ASSERT.hpp"
 #include "Settings.hpp"
 
 namespace AudioSync {
@@ -24,7 +25,7 @@ void Settings::parse() {
 
 template<>
 void Settings::parse<&Settings::storageFileName>() {
-    assert(!"TODO: Not implemented");
+    ASSERT(false, "TODO: Not implemented");
 }
 
 Settings::Settings() {
