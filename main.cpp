@@ -5,8 +5,6 @@
 #include "Settings.hpp"
 
 int main() {
-    AudioSync::Settings::loadSettings();
-
     auto ourInfo = AudioSync::AudioLibraryInfo::getOurAudioLibraryInfo();
     AudioSync::syncWithStreamingServices(ourInfo);
     AudioSync::syncWithLocalDirectories(ourInfo);

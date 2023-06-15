@@ -4,8 +4,15 @@
 
 namespace AudioSync {
 
+const Settings* Settings::getSettings() {
+    if (not Settings::settings) {
+        Settings::settings = std::unique_ptr<Settings>(new Settings());
+    }
+    return Settings::settings.get();
+}
+
 auto Settings::getStorageFileName() const -> const decltype(storageFileName)& {
-    return storageFileName;
+    return settings->storageFileName;
 }
 
 template<auto Settings::* mem1, auto Settings::* mem2, auto Settings::* ... mems>

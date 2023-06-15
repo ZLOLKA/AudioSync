@@ -5,7 +5,7 @@
 
 namespace AudioSync {
 
-class Settings {
+class Settings { // Singleton by "settings" field
 private:
     std::filesystem::path storageFileName;
 
@@ -16,7 +16,7 @@ public:
     static inline const std::filesystem::path fileName = "settings.yaml";
 
 public:
-    static void loadSettings();
+    static const Settings* getSettings();
 
 public:
     auto getStorageFileName() const -> const decltype(storageFileName)&;
