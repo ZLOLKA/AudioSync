@@ -7,6 +7,16 @@
 
 namespace AudioSync {
 
+AudioLibraryInfo::~AudioLibraryInfo() {
+    if (isDir()) {
+        file_name.~decltype(file_name)();
+    } 
+    else {
+        data.~BaseAudioInfo();
+    }
+    childs.~decltype(childs)();
+}
+
 bool AudioLibraryInfo::isDir() const {
     return childs.size() != 0; 
 }
