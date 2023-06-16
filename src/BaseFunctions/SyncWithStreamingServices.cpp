@@ -4,7 +4,7 @@
 
 namespace AudioSync {
 
-void syncWithStreamingService(AudioLibraryInfo& ourInfo) {
+void syncWithStreamingServices(AudioLibraryInfo& ourInfo) {
     baseSyncWith<
         StreamingAPI
         , &StreamingAPI::getStreamingServices
