@@ -3,6 +3,7 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <variant>
 
 #include "BaseAudioInfo.hpp"
 #include "Diff.hpp"
@@ -14,12 +15,12 @@ namespace YAML {
 namespace AudioSync {
 
 class AudioLibraryInfo { // Tree-like structure
+public:
+    using ContainerType = std::set<std::unique_ptr<AudioLibraryInfo>>;
+
 private:
-    std::set<std::unique_ptr<AudioLibraryInfo>> childs;
-    union {
-        decltype(BaseAudioInfo::file_name) file_name;
-        BaseAudioInfo data;
-    };
+    std::filesystem::path file_name;
+    std::variant<ContainerType, BaseAudioInfo> storage;
 
 public:
     static AudioLibraryInfo getOurAudioLibraryInfo();
@@ -27,7 +28,6 @@ public:
     static AudioLibraryInfo deserialize(const YAML::Node& serializedData);
 
 public:
-    ~AudioLibraryInfo();
 
     Diff::Type getDiffWith(const AudioLibraryInfo& other) const;
 
@@ -37,7 +37,9 @@ public:
 
     bool isDir() const;
 
-    const decltype(childs)& getChilds() const;
+    const ContainerType& getChilds() const;
+
+    const BaseAudioInfo& getBaseAudioInfo() const;
 };
 
 }

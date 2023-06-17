@@ -1,33 +1,30 @@
-#include <cassert>
 #include <fstream>
+#include <type_traits>
 
 #include "yaml-cpp/yaml.h"
 
+#include "ASSERT.hpp"
 #include "AudioLibraryInfo.hpp"
 #include "Settings.hpp"
 
 namespace AudioSync {
 
-AudioLibraryInfo::~AudioLibraryInfo() {
-    if (isDir()) {
-        file_name.~decltype(file_name)();
-    } 
-    else {
-        data.~BaseAudioInfo();
-    }
-    childs.~decltype(childs)();
-}
-
 bool AudioLibraryInfo::isDir() const {
-    return childs.size() != 0; 
+    return std::holds_alternative<AudioLibraryInfo::ContainerType>(storage);
 }
 
 const decltype(AudioLibraryInfo::file_name)& AudioLibraryInfo::getFileName() const {
-    return isDir() ? file_name : data.file_name;
+    return file_name;
 }
 
-const decltype(AudioLibraryInfo::childs)& AudioLibraryInfo::getChilds() const {
-    return childs;
+const AudioLibraryInfo::ContainerType& AudioLibraryInfo::getChilds() const {
+    ASSERT(isDir(), "Get childs from BaseAudioInfo variant");
+    return std::get<AudioLibraryInfo::ContainerType>(storage);
+}
+
+const BaseAudioInfo& AudioLibraryInfo::getBaseAudioInfo() const {
+    ASSERT(not isDir(), "Get BaseAudioInfo from directory variant");
+    return std::get<BaseAudioInfo>(storage);
 }
 
 AudioLibraryInfo AudioLibraryInfo::getOurAudioLibraryInfo() {
