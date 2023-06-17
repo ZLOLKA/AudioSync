@@ -7,6 +7,10 @@
 #include "BaseAudioInfo.hpp"
 #include "Diff.hpp"
 
+namespace YAML {
+    class Node;
+}
+
 namespace AudioSync {
 
 class AudioLibraryInfo { // Tree-like structure
@@ -20,7 +24,7 @@ private:
 public:
     static AudioLibraryInfo getOurAudioLibraryInfo();
 
-    static AudioLibraryInfo deserialize(const std::string& serializedData);
+    static AudioLibraryInfo deserialize(const YAML::Node& serializedData);
 
 public:
     ~AudioLibraryInfo();

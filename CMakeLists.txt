@@ -15,3 +15,7 @@ target_compile_options(AudioSync PUBLIC
     -pedantic-errors -Werror -Wall -Wextra -Wpedantic -Wpedantic-macros
 )
 
+# Include yaml-cpp as static lib
+add_subdirectory("third-party/yaml-cpp")
+target_link_libraries(AudioSync PUBLIC yaml-cpp)
+
