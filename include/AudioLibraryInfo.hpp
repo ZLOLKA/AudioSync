@@ -16,11 +16,14 @@ namespace AudioSync {
 
 class AudioLibraryInfo { // Tree-like structure
 public:
-    using ContainerType = std::set<std::unique_ptr<AudioLibraryInfo>>;
+    template<class T>
+    using Container = std::set<T>;
+    using ContainerType = Container<std::unique_ptr<AudioLibraryInfo>>;
+    using VariantType = std::variant<ContainerType, BaseAudioInfo>;
 
 private:
     std::filesystem::path file_name;
-    std::variant<ContainerType, BaseAudioInfo> storage;
+    VariantType storage;
 
 public:
     static AudioLibraryInfo getOurAudioLibraryInfo();
@@ -28,6 +31,9 @@ public:
     static AudioLibraryInfo deserialize(const YAML::Node& serializedData);
 
 public:
+    explicit AudioLibraryInfo(
+        const decltype(file_name)& file_name, VariantType&& storage
+    );
 
     Diff::Type getDiffWith(const AudioLibraryInfo& other) const;
 

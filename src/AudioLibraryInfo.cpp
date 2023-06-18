@@ -9,6 +9,15 @@
 
 namespace AudioSync {
 
+AudioLibraryInfo::AudioLibraryInfo(
+    const decltype(file_name)& file_name
+    , AudioLibraryInfo::VariantType&& storage
+)
+: file_name(file_name)
+, storage(std::move(storage))
+{
+}
+
 bool AudioLibraryInfo::isDir() const {
     return std::holds_alternative<AudioLibraryInfo::ContainerType>(storage);
 }
