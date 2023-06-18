@@ -9,6 +9,7 @@
 #include "Diff.hpp"
 
 namespace YAML {
+    class Emitter;
     class Node;
 }
 
@@ -47,6 +48,18 @@ public:
 
     const BaseAudioInfo& getBaseAudioInfo() const;
 };
+
+}
+
+namespace YAML {
+
+YAML::Emitter& operator<< (
+    YAML::Emitter& yaml, const std::unique_ptr<AudioSync::AudioLibraryInfo>& info_ptr
+);
+
+YAML::Emitter& operator<< (
+    YAML::Emitter& yaml, const AudioSync::AudioLibraryInfo& info
+);
 
 }
 

@@ -3,6 +3,10 @@
 #include <filesystem>
 #include <string>
 
+namespace YAML {
+    class Emitter;
+}
+
 namespace AudioSync {
 
 class BaseAudioInfo {
@@ -16,6 +20,14 @@ public:
 
     static BaseAudioInfo deserialize(const std::string& serializedData);
 };
+
+}
+
+namespace YAML {
+
+YAML::Emitter& operator<< (
+    YAML::Emitter& yaml, const AudioSync::BaseAudioInfo& info
+);
 
 }
 
