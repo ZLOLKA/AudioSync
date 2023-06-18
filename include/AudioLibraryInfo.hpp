@@ -9,6 +9,9 @@
 #include "Diff.hpp"
 
 namespace YAML {
+    template<class T>
+    struct convert;
+
     class Emitter;
     class Node;
 }
@@ -60,6 +63,13 @@ YAML::Emitter& operator<< (
 YAML::Emitter& operator<< (
     YAML::Emitter& yaml, const AudioSync::AudioLibraryInfo& info
 );
+
+template<>
+struct convert<AudioSync::AudioLibraryInfo::ContainerType> {
+    static bool decode(
+        const Node& node, AudioSync::AudioLibraryInfo::ContainerType& childs
+    );
+};
 
 }
 

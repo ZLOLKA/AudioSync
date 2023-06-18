@@ -50,6 +50,24 @@ std::string AudioLibraryInfo::serialize() const {
     return yaml.c_str();
 }
 
+AudioLibraryInfo AudioLibraryInfo::deserialize(const YAML::Node& serializedData) {
+    const auto file_name = serializedData["file_name"].as<std::string>();
+
+    const auto isDir = serializedData["isDir"].as<bool>();
+    AudioLibraryInfo::VariantType storage;
+    const auto yaml_storage = serializedData["storage"];
+    if (isDir) {
+        auto childs = yaml_storage.as<AudioLibraryInfo::ContainerType>();
+        storage = std::move(childs);
+    }
+    else {
+        auto info = yaml_storage.as<BaseAudioInfo>();
+        storage = std::move(info);
+    }
+
+    return AudioLibraryInfo{ file_name, std::move(storage) };
+}
+
 }
 
 namespace YAML {
@@ -80,6 +98,23 @@ YAML::Emitter& operator<< (
     yaml << YAML::EndMap;
 
     return yaml;
+}
+
+bool convert<AudioSync::AudioLibraryInfo::ContainerType>::decode(
+    const Node& node, AudioSync::AudioLibraryInfo::ContainerType& childs
+) {
+    if (not node.IsSequence()) return false;
+
+    for (auto sub_node: node) {
+        if (not node.IsMap()) return false;
+
+        auto audio_library = AudioSync::AudioLibraryInfo::deserialize(sub_node);
+        childs.emplace(
+            std::make_unique<AudioSync::AudioLibraryInfo>(std::move(audio_library))
+        );
+    }
+
+    return true;
 }
 
 }

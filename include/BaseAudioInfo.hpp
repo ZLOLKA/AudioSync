@@ -4,7 +4,11 @@
 #include <string>
 
 namespace YAML {
+    template<class T>
+    struct convert;
+
     class Emitter;
+    class Node;
 }
 
 namespace AudioSync {
@@ -18,7 +22,7 @@ public:
 public:
     std::string serialize() const;
 
-    static BaseAudioInfo deserialize(const std::string& serializedData);
+    static BaseAudioInfo deserialize(const YAML::Node& serializedData);
 };
 
 }
@@ -28,6 +32,13 @@ namespace YAML {
 YAML::Emitter& operator<< (
     YAML::Emitter& yaml, const AudioSync::BaseAudioInfo& info
 );
+
+template<>
+struct convert<AudioSync::BaseAudioInfo>{
+    static bool decode(
+        const Node& node, AudioSync::BaseAudioInfo& childs
+    );
+};
 
 }
 
