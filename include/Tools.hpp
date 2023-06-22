@@ -12,7 +12,7 @@ namespace AudioSync {
 template<
     class Source
     , std::vector<std::unique_ptr<Source>> (getSources)()
-    , AudioLibraryInfo (Source::* getInfo)() const
+    , const AudioLibraryInfo& (Source::* getInfo)() const
     , const std::string Source::* name
 >
 void baseSyncWith(AudioLibraryInfo& ourInfo) {
@@ -20,7 +20,7 @@ void baseSyncWith(AudioLibraryInfo& ourInfo) {
 
     for (auto& source: getSources()) {
         const auto* const source_ptr = source.get();
-        const auto sourceInfo = (source_ptr->*getInfo)();
+        const auto& sourceInfo = (source_ptr->*getInfo)();
         const auto difference = ourInfo.getDiffWith(sourceInfo);
 
         std::unique_ptr<UI_Base> ui = UI_Base::getUI();
