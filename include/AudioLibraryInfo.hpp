@@ -38,6 +38,7 @@ public:
     explicit AudioLibraryInfo(
         const decltype(file_name)& file_name, VariantType&& storage
     );
+    AudioLibraryInfo(AudioLibraryInfo&& other) = default;
 
     Diff::Type getDiffWith(const AudioLibraryInfo& other) const;
 
