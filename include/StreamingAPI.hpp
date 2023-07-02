@@ -9,6 +9,9 @@
 namespace AudioSync {
 
 class StreamingAPI {
+private:
+    const std::string name;
+
 public:
     virtual AudioLibraryInfo getInfo() const = 0;
 
@@ -18,7 +21,7 @@ public:
     static std::vector<std::unique_ptr<StreamingAPI>> getStreamingServices();
 
 public:
-    const std::string name;
+    std::string getName() const;
 
 private:
     StreamingAPI() = default;

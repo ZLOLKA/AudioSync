@@ -15,8 +15,7 @@ public:
 public:
     AudioLibraryInfo getInfo() const;
 
-public:
-    const std::string name;
+    std::string getName() const;
 
 private:
     OtherDirectory() = default;

@@ -9,7 +9,7 @@ void syncWithStreamingServices(AudioLibraryInfo& ourInfo) {
         StreamingAPI
         , &StreamingAPI::getStreamingServices
         , &StreamingAPI::getInfo
-        , &StreamingAPI::name
+        , &StreamingAPI::getName
     >(ourInfo);
 }
 

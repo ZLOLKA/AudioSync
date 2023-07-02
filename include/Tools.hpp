@@ -13,7 +13,7 @@ template<
     class Source
     , std::vector<std::unique_ptr<Source>> (getSources)()
     , const AudioLibraryInfo& (Source::* getInfo)() const
-    , const std::string Source::* name
+    , std::string (Source::* getName)() const
 >
 void baseSyncWith(AudioLibraryInfo& ourInfo) {
     using namespace std::string_literals;
@@ -26,13 +26,14 @@ void baseSyncWith(AudioLibraryInfo& ourInfo) {
         std::unique_ptr<UI_Base> ui = UI_Base::getUI();
         if (difference.empty()) {
             ui->informate(
-                "No differences were found for the "s + source_ptr->*name + "\n"
+                "No differences were found for the "s
+                + (source_ptr->*getName)() + "\n"
             );
         }
         else {
             ui->informate(
-                "Between"s + source_ptr->*name + " and local audio library were"
-                + " found to be different\n"
+                "Between"s + (source_ptr->*getName)() + " and local audio "
+                + "library were found to be different\n"
             );
             
         }
