@@ -13,7 +13,7 @@ private:
     const std::string name;
 
 public:
-    virtual AudioLibraryInfo getInfo() const = 0;
+    virtual const AudioLibraryInfo& getInfo() const = 0;
 
     virtual ~StreamingAPI() = default;
 

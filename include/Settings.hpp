@@ -2,12 +2,14 @@
 
 #include <filesystem>
 #include <memory>
+#include <vector>
 
 namespace AudioSync {
 
 class Settings { // Singleton by "settings" field
 private:
     std::filesystem::path storageFileName;
+    std::vector<std::filesystem::path> otherDirectoriesPaths;
 
 private:
     static std::unique_ptr<Settings> settings;
@@ -20,6 +22,7 @@ public:
 
 public:
     auto getStorageFileName() const -> const decltype(storageFileName)&;
+    auto getOtherDirectoriesPaths() const -> const decltype(otherDirectoriesPaths)&;
 
 private:
     Settings();
