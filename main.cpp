@@ -1,7 +1,8 @@
 #include <vector>
 
-#include "BaseFunctions.hpp"
 #include "AudioLibraryInfo.hpp"
+#include "BaseFunctions.hpp"
+#include "Settings.hpp"
 
 int main() {
     auto ourInfo = AudioSync::AudioLibraryInfo::getOurAudioLibraryInfo();

@@ -13,5 +13,10 @@ add_executable(AudioSync ${src_files})
 target_include_directories(AudioSync PUBLIC "include/")
 target_compile_options(AudioSync PUBLIC 
     -pedantic-errors -Werror -Wall -Wextra -Wpedantic -Wpedantic-macros
+    -ftemplate-backtrace-limit=0
 )
+
+# Include yaml-cpp as static lib
+add_subdirectory("third-party/yaml-cpp")
+target_link_libraries(AudioSync PUBLIC yaml-cpp)
 

@@ -9,7 +9,7 @@ void syncWithLocalDirectories(AudioLibraryInfo& ourInfo) {
         OtherDirectory
         , &OtherDirectory::getOtherDirectories
         , &OtherDirectory::getInfo
-        , &OtherDirectory::name
+        , &OtherDirectory::getName
     >(ourInfo);
 }
 

@@ -1,36 +1,75 @@
 #pragma once
 
-#include <filesystem>
-#include <map>
+#include <memory>
+#include <set>
 #include <string>
-#include <optional>
+#include <variant>
 
+#include "BaseAudioInfo.hpp"
 #include "Diff.hpp"
+
+namespace YAML {
+    template<class T>
+    struct convert;
+
+    class Emitter;
+    class Node;
+}
 
 namespace AudioSync {
 
-class BaseAudioInfo {
+class AudioLibraryInfo { // Tree-like structure
 public:
-	std::string author;
-	std::string track_name;
-	std::string album;
-};
+    template<class T>
+    using Container = std::set<T>;
+    using ContainerType = Container<std::unique_ptr<AudioLibraryInfo>>;
+    using VariantType = std::variant<ContainerType, BaseAudioInfo>;
 
-class InfoCSV_field {
-public:
+private:
     std::filesystem::path file_name;
-    std::optional<BaseAudioInfo> audio_info;
+    VariantType storage;
 
-public:
-    bool isDir();
-};
-
-class AudioLibraryInfo: public std::vector<InfoCSV_field> {
 public:
     static AudioLibraryInfo getOurAudioLibraryInfo();
 
+    static AudioLibraryInfo deserialize(const YAML::Node& serializedData);
+
 public:
-    Diff::Type gitDiff(const AudioLibraryInfo& other) const;
+    explicit AudioLibraryInfo(
+        const decltype(file_name)& file_name, VariantType&& storage
+    );
+    AudioLibraryInfo(AudioLibraryInfo&& other) = default;
+
+    Diff::Type getDiffWith(const AudioLibraryInfo& other) const;
+
+    std::string serialize() const;
+
+    const decltype(file_name)& getFileName() const;
+
+    bool isDir() const;
+
+    const ContainerType& getChilds() const;
+
+    const BaseAudioInfo& getBaseAudioInfo() const;
+};
+
+}
+
+namespace YAML {
+
+YAML::Emitter& operator<< (
+    YAML::Emitter& yaml, const std::unique_ptr<AudioSync::AudioLibraryInfo>& info_ptr
+);
+
+YAML::Emitter& operator<< (
+    YAML::Emitter& yaml, const AudioSync::AudioLibraryInfo& info
+);
+
+template<>
+struct convert<AudioSync::AudioLibraryInfo::ContainerType> {
+    static bool decode(
+        const Node& node, AudioSync::AudioLibraryInfo::ContainerType& childs
+    );
 };
 
 }
