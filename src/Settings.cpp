@@ -7,7 +7,7 @@
 namespace AudioSync {
 
 const Settings* Settings::getSettings() {
-  if (not Settings::settings) {
+  if (not Settings::settings.get()) {
     Settings::settings = std::unique_ptr<Settings>(new Settings());
   }
   return Settings::settings.get();

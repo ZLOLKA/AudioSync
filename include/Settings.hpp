@@ -12,7 +12,7 @@ private:
   std::vector<std::filesystem::path> otherDirectoriesPaths;
 
 private:
-  static std::unique_ptr<Settings> settings;
+  static inline std::unique_ptr<Settings> settings = nullptr;
 
 public:
   static inline const std::filesystem::path fileName = "settings.yaml";
