@@ -21,6 +21,10 @@ OtherDirectory::OtherDirectory(const std::filesystem::path& path)
     : OtherDirectory(AudioLibraryInfo::deserialize(YAML::LoadFile(path.string()))) {
 }
 
+OtherDirectory::OtherDirectory(AudioLibraryInfo&& info)
+    : info(std::move(info)) {
+}
+
 const AudioLibraryInfo& OtherDirectory::getInfo() const {
   return info;
 }
