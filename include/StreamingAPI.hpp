@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AudioLibraryInfo.hpp"
+#include "Target.hpp"
 
 #include <memory>
 #include <string>
@@ -9,21 +10,16 @@
 
 namespace AudioSync {
 
-class StreamingAPI {
+class StreamingAPI : public Target {
 private:
   const std::string name;
 
 public:
-  virtual const AudioLibraryInfo& getInfo() const = 0;
-
   virtual ~StreamingAPI() = default;
+  std::string getName() const override;
 
 public:
-  static std::vector<std::unique_ptr<StreamingAPI>> getStreamingServices();
-
-public:
-  auto getName() const  //
-      -> std::remove_const_t<std::remove_reference_t<decltype(name)>>;
+  static std::vector<std::unique_ptr<Target>> getStreamingServices();
 
 private:
   StreamingAPI() = default;

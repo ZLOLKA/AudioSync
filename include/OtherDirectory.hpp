@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AudioLibraryInfo.hpp"
+#include "Target.hpp"
 
 #include <memory>
 #include <string>
@@ -12,24 +13,21 @@ class path;
 
 namespace AudioSync {
 
-class OtherDirectory {
+class OtherDirectory : public Target {
 private:
   AudioLibraryInfo info;
 
 public:
-  static std::vector<std::unique_ptr<OtherDirectory>> getOtherDirectories();
+  static std::vector<std::unique_ptr<Target>> getOtherDirectories();
+
+public:
+  virtual ~OtherDirectory() = default;
+  const AudioLibraryInfo& getInfo() const override;
+  std::string getName() const override;
 
 public:
   OtherDirectory(const std::filesystem::path& path);
   OtherDirectory(AudioLibraryInfo&& info);
-
-  auto getInfo()  //
-      -> decltype(info)&;
-  auto getInfo() const  //
-      -> const decltype(info)&;
-
-  auto getName() const  //
-      -> std::string;
 };
 
 }  // namespace AudioSync

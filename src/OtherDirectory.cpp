@@ -6,10 +6,10 @@
 
 namespace AudioSync {
 
-std::vector<std::unique_ptr<OtherDirectory>> OtherDirectory::getOtherDirectories() {
+std::vector<std::unique_ptr<Target>> OtherDirectory::getOtherDirectories() {
   const auto* settings = Settings::getSettings();
   const auto storageFileName = settings->getStorageFileName();
-  std::vector<std::unique_ptr<OtherDirectory>> res;
+  std::vector<std::unique_ptr<Target>> res;
   for (auto otherDirectoryPath : settings->getOtherDirectoriesPaths()) {
     const auto otherDirectoryInfoPath = otherDirectoryPath / storageFileName;
     res.emplace_back(std::make_unique<OtherDirectory>(otherDirectoryInfoPath));
@@ -21,12 +21,7 @@ OtherDirectory::OtherDirectory(const std::filesystem::path& path)
     : OtherDirectory(AudioLibraryInfo::deserialize(YAML::LoadFile(path.string()))) {
 }
 
-auto OtherDirectory::getInfo()  //
-    -> decltype(OtherDirectory::info)& {
-  return info;
-}
-auto OtherDirectory::getInfo() const  //
-    -> const decltype(OtherDirectory::info)& {
+const AudioLibraryInfo& OtherDirectory::getInfo() const {
   return info;
 }
 
