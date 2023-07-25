@@ -5,13 +5,11 @@
 namespace AudioSync {
 
 void syncWithLocalDirectories(AudioLibraryInfo& ourInfo) {
-    baseSyncWith<
-        OtherDirectory
-        , &OtherDirectory::getOtherDirectories
-        , &OtherDirectory::getInfo
-        , &OtherDirectory::getName
-    >(ourInfo);
+  baseSyncWith<
+      OtherDirectory,
+      &OtherDirectory::getOtherDirectories,
+      &OtherDirectory::getInfo,
+      &OtherDirectory::getName>(ourInfo);
 }
 
-}
-
+}  // namespace AudioSync

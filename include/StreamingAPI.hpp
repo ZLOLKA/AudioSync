@@ -1,31 +1,32 @@
 #pragma once
 
+#include "AudioLibraryInfo.hpp"
+
 #include <memory>
 #include <string>
+#include <type_traits>
 #include <vector>
-
-#include "AudioLibraryInfo.hpp"
 
 namespace AudioSync {
 
 class StreamingAPI {
 private:
-    const std::string name;
+  const std::string name;
 
 public:
-    virtual const AudioLibraryInfo& getInfo() const = 0;
+  virtual const AudioLibraryInfo& getInfo() const = 0;
 
-    virtual ~StreamingAPI() = default;
-
-public:
-    static std::vector<std::unique_ptr<StreamingAPI>> getStreamingServices();
+  virtual ~StreamingAPI() = default;
 
 public:
-    std::string getName() const;
+  static std::vector<std::unique_ptr<StreamingAPI>> getStreamingServices();
+
+public:
+  auto getName() const  //
+      -> std::remove_const_t<std::remove_reference_t<decltype(name)>>;
 
 private:
-    StreamingAPI() = default;
+  StreamingAPI() = default;
 };
 
-}
-
+}  // namespace AudioSync

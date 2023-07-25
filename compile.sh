@@ -1,2 +1,2 @@
-cmake -CCMakePreLoad.cmake ./ -B ./build && cmake --build ./build
+cmake $@ -CCMakePreLoad.cmake ./ -B ./build && cmake --build ./build
 
