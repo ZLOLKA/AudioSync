@@ -1,11 +1,9 @@
 #pragma once
 
-#include "AudioLibraryInfo.hpp"
 #include "Target.hpp"
 
 #include <memory>
 #include <string>
-#include <type_traits>
 #include <vector>
 
 namespace AudioSync {
@@ -20,6 +18,7 @@ public:
 
 public:
   static std::vector<std::unique_ptr<Target>> getStreamingServices();
+  static std::unique_ptr<StreamingAPI> getStreamingServiceByName(const std::string& name);
 
 private:
   StreamingAPI() = default;

@@ -10,6 +10,7 @@ class Settings {  // Singleton by "settings" field
 private:
   std::filesystem::path storageFileName;
   std::vector<std::filesystem::path> otherDirectoriesPaths;
+  std::vector<std::string> streamingServicesNames;
 
 private:
   static inline std::unique_ptr<Settings> settings = nullptr;
@@ -25,6 +26,8 @@ public:
       -> const decltype(storageFileName)&;
   auto getOtherDirectoriesPaths() const  //
       -> const decltype(otherDirectoriesPaths)&;
+  auto getStreamingServicesNames() const //
+      -> const decltype(streamingServicesNames)&;
 
 private:
   Settings();
