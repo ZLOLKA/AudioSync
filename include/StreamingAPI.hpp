@@ -18,7 +18,9 @@ public:
 
 public:
   static std::vector<std::unique_ptr<Target>> getStreamingServices();
-  static std::unique_ptr<StreamingAPI> getStreamingServiceByName(const std::string& name);
+  static std::unique_ptr<StreamingAPI> getStreamingServiceByName(
+      const std::string& name
+  );
 
 private:
   StreamingAPI() = default;

@@ -35,7 +35,10 @@ public:
   static AudioLibraryInfo deserialize(const YAML::Node& serializedData);
 
 public:
-  explicit AudioLibraryInfo(const decltype(file_name)& file_name, VariantType&& storage);
+  explicit AudioLibraryInfo(
+      const decltype(file_name)& file_name,
+      VariantType&& storage
+  );
   AudioLibraryInfo(AudioLibraryInfo&& other) = default;
 
   auto getDiffWith(const AudioLibraryInfo& other) const  //
@@ -64,7 +67,10 @@ YAML::Emitter& operator<<(
     const std::unique_ptr<AudioSync::AudioLibraryInfo>& info_ptr
 );
 
-YAML::Emitter& operator<<(YAML::Emitter& yaml, const AudioSync::AudioLibraryInfo& info);
+YAML::Emitter& operator<<(
+    YAML::Emitter& yaml,
+    const AudioSync::AudioLibraryInfo& info
+);
 
 template<>
 struct convert<AudioSync::AudioLibraryInfo::ContainerType> {

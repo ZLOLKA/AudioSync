@@ -20,7 +20,9 @@ std::vector<std::unique_ptr<Target>> StreamingAPI::getStreamingServices() {
   return res;
 }
 
-std::unique_ptr<StreamingAPI> StreamingAPI::getStreamingServiceByName(const std::string& name) {
+std::unique_ptr<StreamingAPI> StreamingAPI::getStreamingServiceByName(
+    const std::string& name
+) {
   std::unique_ptr<StreamingAPI> res(nullptr);
   std::map<std::string, std::function<std::unique_ptr<StreamingAPI>()>> loadersByNames {
     // TODO: Create loaders in next format
@@ -32,10 +34,11 @@ std::unique_ptr<StreamingAPI> StreamingAPI::getStreamingServiceByName(const std:
     using namespace std::string_literals;
 
     const auto ui = UI_Base::getUI();
-    ui->informate("For streaming service with name \""s + name + "\" not exist loader");
+    ui->informate(
+        "For streaming service with name \""s + name + "\" not exist loader"
+    );
   }
   return std::move(res);
 }
 
-}
-
+}  // namespace AudioSync

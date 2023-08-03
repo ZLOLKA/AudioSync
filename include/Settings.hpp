@@ -26,7 +26,7 @@ public:
       -> const decltype(storageFileName)&;
   auto getOtherDirectoriesPaths() const  //
       -> const decltype(otherDirectoriesPaths)&;
-  auto getStreamingServicesNames() const //
+  auto getStreamingServicesNames() const  //
       -> const decltype(streamingServicesNames)&;
 
 private:

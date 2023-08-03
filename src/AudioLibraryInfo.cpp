@@ -83,7 +83,10 @@ YAML::Emitter& operator<<(
   return yaml;
 }
 
-YAML::Emitter& operator<<(YAML::Emitter& yaml, const AudioSync::AudioLibraryInfo& info) {
+YAML::Emitter& operator<<(
+    YAML::Emitter& yaml,
+    const AudioSync::AudioLibraryInfo& info
+) {
   const bool is_dir = info.isDir();
   yaml << YAML::BeginMap;
   yaml << YAML::Key << "file_name" << YAML::Value << info.getFileName().string();

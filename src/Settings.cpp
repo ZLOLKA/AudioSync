@@ -23,8 +23,8 @@ auto Settings::getOtherDirectoriesPaths() const  //
   return settings->otherDirectoriesPaths;
 }
 
-auto Settings::getStreamingServicesNames() const //
--> const decltype(streamingServicesNames)& {
+auto Settings::getStreamingServicesNames() const  //
+    -> const decltype(streamingServicesNames)& {
   return settings->streamingServicesNames;
 }
 
@@ -51,7 +51,10 @@ void Settings::parse<&Settings::streamingServicesNames>() {
 }
 
 Settings::Settings() {
-  parse<&Settings::storageFileName, &Settings::otherDirectoriesPaths, &Settings::streamingServicesNames>();
+  parse<
+      &Settings::storageFileName,
+      &Settings::otherDirectoriesPaths,
+      &Settings::streamingServicesNames>();
 }
 
 }  // namespace AudioSync
