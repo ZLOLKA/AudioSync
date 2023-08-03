@@ -12,6 +12,7 @@ namespace AudioSync {
 class UI_Base {
 public:
   virtual void informate(const std::string& info) const = 0;
+  virtual void warning(const std::string& msg) const = 0;
   virtual ~UI_Base() = default;
 
 public:
