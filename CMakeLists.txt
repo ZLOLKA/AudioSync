@@ -27,7 +27,10 @@ if(USE_CHECK_FORMAT)
         RESULT_VARIABLE result_format
     )
     if(${result_format})
-        message(FATAL_ERROR "ERROR: Unformatted code file: for fix run\nclang-format --style=file -i ./path/to/problem/file")
+        message(FATAL_ERROR "ERROR: Unformatted code file:"
+        "\nfor fix run"
+        "\nclang-format --style=file -i ./path/to/problem/file"
+        "\nor run cmake with -DUSE_CHECK_FORMAT=0 option (for ignoring this check)")
     endif()
     message("*** End checking format process\n")
 endif()
