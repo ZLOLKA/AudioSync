@@ -9,6 +9,7 @@ namespace AudioSync {
 class Settings {  // Singleton by "settings" field
 private:
   std::filesystem::path storageFileName;
+  std::filesystem::path path2RootDir;
   std::vector<std::filesystem::path> otherDirectoriesPaths;
   std::vector<std::string> streamingServicesNames;
 
@@ -28,6 +29,8 @@ public:
       -> const decltype(otherDirectoriesPaths)&;
   auto getStreamingServicesNames() const  //
       -> const decltype(streamingServicesNames)&;
+  auto getPath2RootDir() const  //
+      -> const decltype(path2RootDir)&;
 
 private:
   Settings();

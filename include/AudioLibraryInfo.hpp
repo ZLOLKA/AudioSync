@@ -34,6 +34,10 @@ public:
 
   static AudioLibraryInfo deserialize(const YAML::Node& serializedData);
 
+  static AudioLibraryInfo createInfoFromRootDir(
+      const std::filesystem::path& path2RootDir
+  );
+
 public:
   explicit AudioLibraryInfo(
       const decltype(file_name)& file_name,
@@ -56,6 +60,10 @@ public:
 
   auto getBaseAudioInfo() const  //
       -> const BaseAudioInfo&;
+
+private:
+  void writeInfoInStorageFile(const std::filesystem::path& path2StorageFile
+  ) const;
 };
 
 }  // namespace AudioSync

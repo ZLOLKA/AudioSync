@@ -28,6 +28,11 @@ auto Settings::getStreamingServicesNames() const  //
   return settings->streamingServicesNames;
 }
 
+auto Settings::getPath2RootDir() const  //
+    -> const decltype(path2RootDir)& {
+  return path2RootDir;
+}
+
 template<auto Settings::*mem1, auto Settings::*mem2, auto Settings::*... mems>
 void Settings::parse() {
   parse<mem1>();
@@ -50,11 +55,17 @@ void Settings::parse<&Settings::streamingServicesNames>() {
   ASSERT(false, "TODO: Not implemented");
 }
 
+template<>
+void Settings::parse<&Settings::path2RootDir>() {
+  ASSERT(false, "TODO: Not implemented");
+}
+
 Settings::Settings() {
   parse<
       &Settings::storageFileName,
       &Settings::otherDirectoriesPaths,
-      &Settings::streamingServicesNames>();
+      &Settings::streamingServicesNames,
+      &Settings::path2RootDir>();
 }
 
 }  // namespace AudioSync

@@ -44,8 +44,15 @@ auto AudioLibraryInfo::getOurAudioLibraryInfo()  //
   const auto settings = Settings::getSettings();
   const auto storageFileName = settings->getStorageFileName();
 
-  const auto storageFile = YAML::LoadFile(storageFileName.string());
-  return deserialize(storageFile);
+  try {
+    const auto storageFile = YAML::LoadFile(storageFileName.string());
+    return deserialize(storageFile);
+  } catch (YAML::BadFile) {  // Generate in YAML::LoadFile(const std::string&)
+    const auto path2RootDir = settings->getPath2RootDir();
+    auto info = createInfoFromRootDir(path2RootDir);
+    info.writeInfoInStorageFile(storageFileName);
+    return info;
+  }
 }
 
 std::string AudioLibraryInfo::serialize() const {
