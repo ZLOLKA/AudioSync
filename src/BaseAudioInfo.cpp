@@ -6,13 +6,14 @@
 
 namespace AudioSync {
 
-std::string BaseAudioInfo::serialize() const {
+std::string BaseAudioInfo::serialize() const NOEXCEPT_T {
   YAML::Emitter yaml;
   yaml << *this;
   return yaml.c_str();
 }
 
-BaseAudioInfo BaseAudioInfo::deserialize(const YAML::Node& serializedData) {
+BaseAudioInfo BaseAudioInfo::deserialize(const YAML::Node& serializedData
+) NOEXCEPT_T {
   BaseAudioInfo res;
 
   res.author = serializedData["author"].as<std::string>();

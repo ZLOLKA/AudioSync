@@ -1,5 +1,7 @@
 #pragma once
 
+#include "DebugTools/NOEXCEPT.hpp"
+
 #include <filesystem>
 #include <memory>
 #include <vector>
@@ -20,26 +22,26 @@ public:
   static inline const std::filesystem::path fileName = "settings.yaml";
 
 public:
-  static const Settings* getSettings();
+  static const Settings* getSettings() NOEXCEPT_T;
 
 public:
-  auto getStorageFileName() const  //
+  auto getStorageFileName() const NOEXCEPT_T  //
       -> const decltype(storageFileName)&;
-  auto getOtherDirectoriesPaths() const  //
+  auto getOtherDirectoriesPaths() const NOEXCEPT_T  //
       -> const decltype(otherDirectoriesPaths)&;
-  auto getStreamingServicesNames() const  //
+  auto getStreamingServicesNames() const NOEXCEPT_T  //
       -> const decltype(streamingServicesNames)&;
-  auto getPath2RootDir() const  //
+  auto getPath2RootDir() const NOEXCEPT_T  //
       -> const decltype(path2RootDir)&;
 
 private:
-  Settings();
+  Settings() NOEXCEPT_T;
 
   template<auto Settings::*mem1, auto Settings::*mem2, auto Settings::*... mems>
-  void parse();
+  void parse() NOEXCEPT_T;
 
   template<auto Settings::*mem>
-  void parse() = delete;
+  void parse() NOEXCEPT_T = delete;
 };
 
 }  // namespace AudioSync

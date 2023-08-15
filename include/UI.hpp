@@ -1,5 +1,7 @@
 #pragma once
 
+#include "DebugTools/NOEXCEPT.hpp"
+
 #include <functional>
 #include <iterator>
 #include <memory>
@@ -16,11 +18,11 @@ public:
   virtual ~UI_Base() = default;
 
 public:
-  static std::unique_ptr<UI_Base> getUI();
+  static std::unique_ptr<UI_Base> getUI() NOEXCEPT_T;
 
 public:
   template<class T, class Result = decltype(*std::begin(std::declval<T>()))&>
-  Result selectFrom(const T&);
+  Result selectFrom(const T&) NOEXCEPT_T;
 
 protected:
   class ForwardIteratorType {

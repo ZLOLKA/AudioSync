@@ -8,8 +8,8 @@ namespace AudioSync {
 
 class Target {
 public:
-  virtual const AudioLibraryInfo& getInfo() const = 0;
-  virtual std::string getName() const = 0;
+  virtual const AudioLibraryInfo& getInfo() const NOEXCEPT_T = 0;
+  virtual std::string getName() const NOEXCEPT_T = 0;
 
   virtual ~Target() = default;
 };

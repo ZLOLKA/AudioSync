@@ -8,7 +8,7 @@ namespace AudioSync {
 void baseSyncWith(
     AudioLibraryInfo& ourInfo,
     std::vector<std::unique_ptr<Target>> sources
-) {
+) NOEXCEPT_T {
   using namespace std::string_literals;
 
   for (auto& source : sources) {

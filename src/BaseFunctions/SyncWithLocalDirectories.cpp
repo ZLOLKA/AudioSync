@@ -4,7 +4,7 @@
 
 namespace AudioSync {
 
-void syncWithLocalDirectories(AudioLibraryInfo& ourInfo) {
+void syncWithLocalDirectories(AudioLibraryInfo& ourInfo) NOEXCEPT_T {
   baseSyncWith(ourInfo, OtherDirectory::getOtherDirectories());
 }
 

@@ -4,7 +4,7 @@
 
 namespace AudioSync {
 
-void syncWithStreamingServices(AudioLibraryInfo& ourInfo) {
+void syncWithStreamingServices(AudioLibraryInfo& ourInfo) NOEXCEPT_T {
   baseSyncWith(ourInfo, StreamingAPI::getStreamingServices());
 }
 

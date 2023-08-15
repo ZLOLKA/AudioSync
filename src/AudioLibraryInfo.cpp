@@ -1,6 +1,6 @@
 #include "AudioLibraryInfo.hpp"
 
-#include "ASSERT.hpp"
+#include "DebugTools/ASSERT.hpp"
 #include "Settings.hpp"
 
 #include "yaml-cpp/yaml.h"
@@ -13,33 +13,33 @@ namespace AudioSync {
 AudioLibraryInfo::AudioLibraryInfo(
     const decltype(file_name)& file_name,
     AudioLibraryInfo::VariantType&& storage
-)
+) NOEXCEPT_T
     : file_name(file_name)
     , storage(std::move(storage)) {
 }
 
-bool AudioLibraryInfo::isDir() const {
+bool AudioLibraryInfo::isDir() const NOEXCEPT_T {
   return std::holds_alternative<AudioLibraryInfo::ContainerType>(storage);
 }
 
-auto AudioLibraryInfo::getFileName() const  //
+auto AudioLibraryInfo::getFileName() const NOEXCEPT_T  //
     -> const decltype(AudioLibraryInfo::file_name)& {
   return file_name;
 }
 
-auto AudioLibraryInfo::getChilds() const  //
+auto AudioLibraryInfo::getChilds() const NOEXCEPT_T  //
     -> const AudioLibraryInfo::ContainerType& {
   ASSERT(isDir(), "Get childs from BaseAudioInfo variant");
   return std::get<AudioLibraryInfo::ContainerType>(storage);
 }
 
-auto AudioLibraryInfo::getBaseAudioInfo() const  //
+auto AudioLibraryInfo::getBaseAudioInfo() const NOEXCEPT_T  //
     -> const BaseAudioInfo& {
   ASSERT(not isDir(), "Get BaseAudioInfo from directory variant");
   return std::get<BaseAudioInfo>(storage);
 }
 
-auto AudioLibraryInfo::getOurAudioLibraryInfo()  //
+auto AudioLibraryInfo::getOurAudioLibraryInfo() NOEXCEPT_T  //
     -> AudioLibraryInfo {
   const auto settings = Settings::getSettings();
   const auto storageFileName = settings->getStorageFileName();
@@ -55,13 +55,14 @@ auto AudioLibraryInfo::getOurAudioLibraryInfo()  //
   }
 }
 
-std::string AudioLibraryInfo::serialize() const {
+std::string AudioLibraryInfo::serialize() const NOEXCEPT_T {
   YAML::Emitter yaml;
   yaml << *this;
   return yaml.c_str();
 }
 
-AudioLibraryInfo AudioLibraryInfo::deserialize(const YAML::Node& serializedData) {
+AudioLibraryInfo AudioLibraryInfo::deserialize(const YAML::Node& serializedData
+) NOEXCEPT_T {
   const auto file_name = serializedData["file_name"].as<std::string>();
 
   const auto isDir = serializedData["isDir"].as<bool>();

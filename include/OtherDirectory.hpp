@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AudioLibraryInfo.hpp"
+#include "DebugTools/NOEXCEPT.hpp"
 #include "Target.hpp"
 
 #include <memory>
@@ -18,16 +19,16 @@ private:
   AudioLibraryInfo info;
 
 public:
-  static std::vector<std::unique_ptr<Target>> getOtherDirectories();
+  static std::vector<std::unique_ptr<Target>> getOtherDirectories() NOEXCEPT_T;
 
 public:
   virtual ~OtherDirectory() = default;
-  const AudioLibraryInfo& getInfo() const override;
-  std::string getName() const override;
+  const AudioLibraryInfo& getInfo() const NOEXCEPT_T override;
+  std::string getName() const NOEXCEPT_T override;
 
 public:
-  OtherDirectory(const std::filesystem::path& path);
-  OtherDirectory(AudioLibraryInfo&& info);
+  OtherDirectory(const std::filesystem::path& path) NOEXCEPT_T;
+  OtherDirectory(AudioLibraryInfo&& info) NOEXCEPT_T;
 };
 
 }  // namespace AudioSync

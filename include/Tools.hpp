@@ -1,5 +1,7 @@
 #pragma once
 
+#include "DebugTools/NOEXCEPT.hpp"
+
 #include <memory>
 #include <vector>
 
@@ -11,6 +13,6 @@ class Target;
 void baseSyncWith(
     AudioLibraryInfo& ourInfo,
     std::vector<std::unique_ptr<Target>> sources
-);
+) NOEXCEPT_T;
 
 }  // namespace AudioSync

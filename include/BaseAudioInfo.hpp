@@ -1,5 +1,7 @@
 #pragma once
 
+#include "DebugTools/NOEXCEPT.hpp"
+
 #include <filesystem>
 #include <string>
 
@@ -20,9 +22,9 @@ public:
   std::string album;
 
 public:
-  std::string serialize() const;
+  std::string serialize() const NOEXCEPT_T;
 
-  static BaseAudioInfo deserialize(const YAML::Node& serializedData);
+  static BaseAudioInfo deserialize(const YAML::Node& serializedData) NOEXCEPT_T;
 };
 
 }  // namespace AudioSync

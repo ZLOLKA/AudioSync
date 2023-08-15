@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BaseAudioInfo.hpp"
+#include "DebugTools/NOEXCEPT.hpp"
 #include "Diff.hpp"
 
 #include <memory>
@@ -30,40 +31,41 @@ private:
   VariantType storage;
 
 public:
-  static AudioLibraryInfo getOurAudioLibraryInfo();
+  static AudioLibraryInfo getOurAudioLibraryInfo() NOEXCEPT_T;
 
-  static AudioLibraryInfo deserialize(const YAML::Node& serializedData);
+  static AudioLibraryInfo deserialize(const YAML::Node& serializedData
+  ) NOEXCEPT_T;
 
   static AudioLibraryInfo createInfoFromRootDir(
       const std::filesystem::path& path2RootDir
-  );
+  ) NOEXCEPT_T;
 
 public:
   explicit AudioLibraryInfo(
       const decltype(file_name)& file_name,
       VariantType&& storage
-  );
-  AudioLibraryInfo(AudioLibraryInfo&& other) = default;
+  ) NOEXCEPT_T;
+  AudioLibraryInfo(AudioLibraryInfo&& other) NOEXCEPT_T = default;
 
-  auto getDiffWith(const AudioLibraryInfo& other) const  //
+  auto getDiffWith(const AudioLibraryInfo& other) const NOEXCEPT_T  //
       -> Diff::Type;
 
-  std::string serialize() const;
+  std::string serialize() const NOEXCEPT_T;
 
-  auto getFileName() const  //
+  auto getFileName() const NOEXCEPT_T  //
       -> const decltype(file_name)&;
 
-  bool isDir() const;
+  bool isDir() const NOEXCEPT_T;
 
-  auto getChilds() const  //
+  auto getChilds() const NOEXCEPT_T  //
       -> const ContainerType&;
 
-  auto getBaseAudioInfo() const  //
+  auto getBaseAudioInfo() const NOEXCEPT_T  //
       -> const BaseAudioInfo&;
 
 private:
   void writeInfoInStorageFile(const std::filesystem::path& path2StorageFile
-  ) const;
+  ) const NOEXCEPT_T;
 };
 
 }  // namespace AudioSync

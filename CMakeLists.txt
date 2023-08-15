@@ -35,6 +35,10 @@ if(USE_CHECK_FORMAT)
     message("*** End checking format process\n")
 endif()
 
+if(NOT DEFINED NOEXCEPT_MODE)
+    set(NOEXCEPT_MODE 0)
+endif()
+
 add_executable(AudioSync ${src_files})
 
 target_include_directories(AudioSync PUBLIC "include/")
@@ -42,6 +46,13 @@ target_compile_options(AudioSync PUBLIC
     -pedantic-errors -Werror -Wall -Wextra -Wpedantic -Wpedantic-macros
     -ftemplate-backtrace-limit=0
 )
+
+message("\nNOEXCEPT_MODE=" ${NOEXCEPT_MODE} 
+    "\nIf cmake run with -DNOEXCEPT_MODE=-1 then all function marked noexcept(false)"
+    "\nIf with -DNOEXCEPT_MODE=0 then noexcept(exp)"
+    "\nIf with -DNOEXCEPT_MODE=1 then noexcept(true)"
+    "\n")
+target_compile_definitions(AudioSync PUBLIC NOEXCEPT_MODE=${NOEXCEPT_MODE})
 
 # Include yaml-cpp as static lib
 add_subdirectory("third-party/yaml-cpp")

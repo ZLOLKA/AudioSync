@@ -6,7 +6,8 @@
 
 namespace AudioSync {
 
-std::vector<std::unique_ptr<Target>> OtherDirectory::getOtherDirectories() {
+std::vector<std::unique_ptr<Target>> OtherDirectory::getOtherDirectories(
+) NOEXCEPT_T {
   const auto* settings = Settings::getSettings();
   const auto storageFileName = settings->getStorageFileName();
   std::vector<std::unique_ptr<Target>> res;
@@ -17,19 +18,19 @@ std::vector<std::unique_ptr<Target>> OtherDirectory::getOtherDirectories() {
   return res;
 }
 
-OtherDirectory::OtherDirectory(const std::filesystem::path& path)
+OtherDirectory::OtherDirectory(const std::filesystem::path& path) NOEXCEPT_T
     : OtherDirectory(AudioLibraryInfo::deserialize(YAML::LoadFile(path.string()))) {
 }
 
-OtherDirectory::OtherDirectory(AudioLibraryInfo&& info)
-    : info(std::move(info)) {
+OtherDirectory::OtherDirectory(AudioLibraryInfo&& info
+) NOEXCEPT_T : info(std::move(info)) {
 }
 
-const AudioLibraryInfo& OtherDirectory::getInfo() const {
+const AudioLibraryInfo& OtherDirectory::getInfo() const NOEXCEPT_T {
   return info;
 }
 
-std::string OtherDirectory::getName() const {
+std::string OtherDirectory::getName() const NOEXCEPT_T {
   return getInfo().getFileName().string();
 }
 

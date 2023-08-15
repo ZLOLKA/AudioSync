@@ -8,7 +8,8 @@
 
 namespace AudioSync {
 
-std::vector<std::unique_ptr<Target>> StreamingAPI::getStreamingServices() {
+std::vector<std::unique_ptr<Target>> StreamingAPI::getStreamingServices(
+) NOEXCEPT_T {
   const auto* settings = Settings::getSettings();
   std::vector<std::unique_ptr<Target>> res;
   for (const auto& nameStreamingService : settings->getStreamingServicesNames()) {
@@ -22,7 +23,7 @@ std::vector<std::unique_ptr<Target>> StreamingAPI::getStreamingServices() {
 
 std::unique_ptr<StreamingAPI> StreamingAPI::getStreamingServiceByName(
     const std::string& name
-) {
+) NOEXCEPT_T {
   using namespace std::string_literals;
 
   const auto ui = UI_Base::getUI();
