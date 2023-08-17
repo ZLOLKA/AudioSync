@@ -6,11 +6,55 @@ cmake_minimum_required(VERSION 3.26)
 
 project(AudioSync VERSION 0.1 LANGUAGES CXX)
 
-file(GLOB src_files 
-    "./src/**/*.cpp" 
-    "./src/*.cpp" 
-    "./main.cpp"
+file(GLOB src_files
+    "./src/**/*.cpp"
+    "./src/*.cpp"
 )
+
+if(NOT DEFINED NOEXCEPT_MODE)
+    set(NOEXCEPT_MODE 0)
+endif()
+
+add_library(AudioSyncLib STATIC ${src_files})
+
+target_include_directories(AudioSyncLib PUBLIC "include/")
+target_compile_options(AudioSyncLib PRIVATE
+    -Werror
+)
+target_compile_options(AudioSyncLib PUBLIC
+    -pedantic-errors -Wall -Wextra -Wpedantic -Wpedantic-macros
+    -ftemplate-backtrace-limit=0
+)
+
+message("\nNOEXCEPT_MODE=" ${NOEXCEPT_MODE}
+    "\nIf cmake run with -DNOEXCEPT_MODE=-1 then all function marked noexcept(false)"
+    "\nIf with -DNOEXCEPT_MODE=0 then noexcept(exp)"
+    "\nIf with -DNOEXCEPT_MODE=1 then noexcept(true)"
+    "\n")
+target_compile_definitions(AudioSyncLib PUBLIC NOEXCEPT_MODE=${NOEXCEPT_MODE})
+
+# Include yaml-cpp as static lib
+add_subdirectory("third-party/yaml-cpp")
+target_link_libraries(AudioSyncLib PUBLIC yaml-cpp)
+
+add_executable(AudioSync "main.cpp")
+target_link_libraries(AudioSync PUBLIC AudioSyncLib)
+
+if(NOT DEFINED USE_TESTS)
+    set(USE_TESTS 1)
+endif()
+message("USE_TESTS=" ${USE_TESTS} "\n")
+if(USE_TESTS)
+    set(test_target_name "AudioSync_tests")
+    include("tests/cpp_tests/CMakeLists.txt")
+    add_custom_command(TARGET ${test_target_name} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E echo ""
+        COMMAND ${CMAKE_COMMAND} -E echo "*** Start tests"
+        COMMAND ${test_target_name}
+        COMMAND ${CMAKE_COMMAND} -E echo "*** End tests"
+        COMMAND ${CMAKE_COMMAND} -E echo ""
+    )
+endif()
 
 if(NOT DEFINED USE_CHECK_FORMAT)
     set(USE_CHECK_FORMAT 1)
@@ -21,9 +65,24 @@ if(USE_CHECK_FORMAT)
         "./include/**/*.hpp"
         "./include/*.hpp"
     )
+    set(to_format_files
+        "./main.cpp"
+        ${h_files}
+        ${src_files}
+    )
+    if(USE_TESTS)
+        file(GLOB mock_files
+            "./tests/cpp_tests/gMocks/**/*_mock.hpp"
+            "./tests/cpp_tests/gMocks/*_mock.hpp"
+        )
+        list(APPEND to_format_files
+            ${tests_files}
+            ${mock_files}
+        )
+    endif()
 
     execute_process(
-        COMMAND clang-format --style=file --verbose --dry-run --Werror ${h_files} ${src_files}
+        COMMAND clang-format --style=file --verbose --dry-run --Werror ${to_format_files}
         RESULT_VARIABLE result_format
     )
     if(${result_format})
@@ -34,27 +93,4 @@ if(USE_CHECK_FORMAT)
     endif()
     message("*** End checking format process\n")
 endif()
-
-if(NOT DEFINED NOEXCEPT_MODE)
-    set(NOEXCEPT_MODE 0)
-endif()
-
-add_executable(AudioSync ${src_files})
-
-target_include_directories(AudioSync PUBLIC "include/")
-target_compile_options(AudioSync PUBLIC 
-    -pedantic-errors -Werror -Wall -Wextra -Wpedantic -Wpedantic-macros
-    -ftemplate-backtrace-limit=0
-)
-
-message("\nNOEXCEPT_MODE=" ${NOEXCEPT_MODE} 
-    "\nIf cmake run with -DNOEXCEPT_MODE=-1 then all function marked noexcept(false)"
-    "\nIf with -DNOEXCEPT_MODE=0 then noexcept(exp)"
-    "\nIf with -DNOEXCEPT_MODE=1 then noexcept(true)"
-    "\n")
-target_compile_definitions(AudioSync PUBLIC NOEXCEPT_MODE=${NOEXCEPT_MODE})
-
-# Include yaml-cpp as static lib
-add_subdirectory("third-party/yaml-cpp")
-target_link_libraries(AudioSync PUBLIC yaml-cpp)
 
