@@ -72,8 +72,8 @@ if(USE_CHECK_FORMAT)
     )
     if(USE_TESTS)
         file(GLOB mock_files
-            "./tests/cpp_tests/gMocks/**/*_mock.hpp"
-            "./tests/cpp_tests/gMocks/*_mock.hpp"
+            "${tests_dir}/gMocks/**/*_mock.hpp"
+            "${tests_dir}/gMocks/*_mock.hpp"
         )
         list(APPEND to_format_files
             ${tests_files}
