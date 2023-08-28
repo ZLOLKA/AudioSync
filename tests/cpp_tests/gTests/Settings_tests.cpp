@@ -1,13 +1,16 @@
 #include "Settings.hpp"
 
-#include <gtest/gtest.h>
+#include "EmptySettingsFile.hpp"
+#include "NormalSettingsFile.hpp"
+#include "TestTools.hpp"
+#include "WithoutSettingsFile.hpp"
 
-namespace AudioSync {
+namespace AudioSync::Tests {
 
-TEST(SettingsTests, SingletonTest) {
-  auto settings0 = Settings::getSettings();
-  auto settings1 = Settings::getSettings();
-  EXPECT_TRUE(settings0 == settings1);
-}
+TEST_FM(NormalSettingsFile, singletonTest)
 
-}  // namespace AudioSync
+TEST_FM(EmptySettingsFile, singletonTest)
+
+TEST_FM(WithoutSettingsFile, singletonTest)
+
+}  // namespace AudioSync::Tests

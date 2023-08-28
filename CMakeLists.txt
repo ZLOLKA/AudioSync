@@ -48,9 +48,10 @@ if(USE_TESTS)
     set(test_target_name "AudioSync_tests")
     include("tests/cpp_tests/CMakeLists.txt")
     add_custom_command(TARGET ${test_target_name} POST_BUILD
+        WORKING_DIRECTORY "${test_output_dir}/"
         COMMAND ${CMAKE_COMMAND} -E echo ""
         COMMAND ${CMAKE_COMMAND} -E echo "*** Start tests"
-        COMMAND ${test_target_name}
+        COMMAND "${test_target_name}"
         COMMAND ${CMAKE_COMMAND} -E echo "*** End tests"
         COMMAND ${CMAKE_COMMAND} -E echo ""
     )
@@ -75,7 +76,13 @@ if(USE_CHECK_FORMAT)
             "${tests_dir}/gMocks/**/*_mock.hpp"
             "${tests_dir}/gMocks/*_mock.hpp"
         )
+        file(GLOB test_h_files
+            "${tests_dir}/include/**/*.hpp"
+            "${tests_dir}/include/*.hpp"
+        )
         list(APPEND to_format_files
+            ${test_h_files}
+            ${test_src_files}
             ${tests_files}
             ${mock_files}
         )
