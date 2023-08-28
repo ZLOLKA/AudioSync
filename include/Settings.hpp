@@ -19,7 +19,7 @@ private:
   static inline std::unique_ptr<Settings> settings = nullptr;
 
 public:
-  static inline const std::filesystem::path fileName = "settings.yaml";
+  static inline const std::filesystem::path fileName = "./settings.yaml";
 
 public:
   static const Settings* getSettings() NOEXCEPT_T;
