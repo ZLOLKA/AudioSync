@@ -28,10 +28,16 @@ target_compile_options(AudioSyncLib PUBLIC
 
 message("\nNOEXCEPT_MODE=" ${NOEXCEPT_MODE}
     "\nIf cmake run with -DNOEXCEPT_MODE=-1 then all function marked noexcept(false)"
+    " and add compile option -Wno-microsoft-exception-spec"
     "\nIf with -DNOEXCEPT_MODE=0 then noexcept(exp)"
     "\nIf with -DNOEXCEPT_MODE=1 then noexcept(true)"
     "\n")
 target_compile_definitions(AudioSyncLib PUBLIC NOEXCEPT_MODE=${NOEXCEPT_MODE})
+if(${NOEXCEPT_MODE} STREQUAL "-1")
+    target_compile_options(AudioSyncLib PUBLIC
+        -Wno-microsoft-exception-spec
+    )
+endif()
 
 # Include yaml-cpp as static lib
 add_subdirectory("third-party/yaml-cpp")

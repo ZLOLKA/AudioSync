@@ -1,6 +1,7 @@
 #include "NormalSettingsFile.hpp"
 
 #include "DebugTools/ASSERT.hpp"
+#include "DebugTools/NOEXCEPT.hpp"
 #include "Settings.hpp"
 
 #include <yaml-cpp/yaml.h>
@@ -10,7 +11,7 @@
 
 namespace AudioSync::Tests {
 
-NormalSettingsFile::NormalSettingsFile() {
+NormalSettingsFile::NormalSettingsFile() NOEXCEPT_T {
   std::ofstream settingsFile(::AudioSync::Settings::fileName);
   ASSERT(settingsFile.is_open(), "SettingsFile has not been created");
 
@@ -25,7 +26,7 @@ NormalSettingsFile::NormalSettingsFile() {
   yaml << ::YAML::EndMap;
 }
 
-NormalSettingsFile::~NormalSettingsFile() {
+NormalSettingsFile::~NormalSettingsFile() NOEXCEPT_T {
   try {
     std::filesystem::remove(::AudioSync::Settings::fileName);
   } catch (std::filesystem::filesystem_error& e) {

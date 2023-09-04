@@ -4,10 +4,10 @@
 
 namespace AudioSync::Tests {
 
-SettingsFileFixture::~SettingsFileFixture() {
+SettingsFileFixture::~SettingsFileFixture() NOEXCEPT_T {
 }
 
-void SettingsFileFixture::singletonTest() {
+void SettingsFileFixture::singletonTest() NOEXCEPT_T {
   auto settings0 = ::AudioSync::Settings::getSettings();
   auto settings1 = ::AudioSync::Settings::getSettings();
   EXPECT_TRUE(settings0 == settings1);

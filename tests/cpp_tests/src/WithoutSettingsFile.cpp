@@ -2,6 +2,6 @@
 
 namespace AudioSync::Tests {
 
-WithoutSettingsFile::~WithoutSettingsFile() = default;
+WithoutSettingsFile::~WithoutSettingsFile() NOEXCEPT_T = default;
 
 }  // namespace AudioSync::Tests

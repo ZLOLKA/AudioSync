@@ -1,6 +1,7 @@
 #include "EmptySettingsFile.hpp"
 
 #include "DebugTools/ASSERT.hpp"
+#include "DebugTools/NOEXCEPT.hpp"
 #include "Settings.hpp"
 
 #include <filesystem>
@@ -8,12 +9,12 @@
 
 namespace AudioSync::Tests {
 
-EmptySettingsFile::EmptySettingsFile() {
+EmptySettingsFile::EmptySettingsFile() NOEXCEPT_T {
   std::ofstream settingsFile(::AudioSync::Settings::fileName);
   ASSERT(settingsFile.is_open(), "SettingsFile has not been created");
 }
 
-EmptySettingsFile::~EmptySettingsFile() {
+EmptySettingsFile::~EmptySettingsFile() NOEXCEPT_T {
   try {
     std::filesystem::remove(::AudioSync::Settings::fileName);
   } catch (std::filesystem::filesystem_error& e) {
