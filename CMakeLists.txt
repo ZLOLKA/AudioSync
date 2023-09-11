@@ -11,10 +11,6 @@ file(GLOB src_files
     "./src/*.cpp"
 )
 
-if(NOT DEFINED NOEXCEPT_MODE)
-    set(NOEXCEPT_MODE 0)
-endif()
-
 add_library(AudioSyncLib STATIC ${src_files})
 
 target_include_directories(AudioSyncLib PUBLIC "include/")
@@ -26,6 +22,9 @@ target_compile_options(AudioSyncLib PUBLIC
     -ftemplate-backtrace-limit=0
 )
 
+if(NOT DEFINED NOEXCEPT_MODE)
+    set(NOEXCEPT_MODE 0)
+endif()
 message("\nNOEXCEPT_MODE=" ${NOEXCEPT_MODE}
     "\nIf cmake run with -DNOEXCEPT_MODE=-1 then all function marked noexcept(false)"
     " and add compile option -Wno-microsoft-exception-spec"
