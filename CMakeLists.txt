@@ -22,6 +22,12 @@ target_compile_options(AudioSyncLib PUBLIC
     -ftemplate-backtrace-limit=0
 )
 
+if(NOT DEFINED USE_ASSERT_AS_THROW)
+    set(USE_ASSERT_AS_THROW 1)
+endif()
+message("\nUSE_ASSERT_AS_THROW=" ${USE_ASSERT_AS_THROW} "\n")
+target_compile_definitions(AudioSyncLib PUBLIC USE_ASSERT_AS_THROW=${USE_ASSERT_AS_THROW})
+
 if(NOT DEFINED NOEXCEPT_MODE)
     set(NOEXCEPT_MODE 0)
 endif()

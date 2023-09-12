@@ -18,3 +18,23 @@
 #endif
 
 #define NOEXCEPT_T NOEXCEPT(true)
+
+namespace AudioSync {
+
+template<class Exception, class... Exceptions>
+struct IsException {
+private:
+  constexpr static bool allTypesIsException =
+      (Exception::is_exception && ... && Exceptions::is_exception);
+  static_assert(allTypesIsException, "All types must be Exceptions");
+
+public:
+  constexpr static bool value = allTypesIsException;
+};
+
+template<class Type, class... Types>
+constexpr bool Exceptions = IsException<Type, Types...>::value;
+
+}  // namespace AudioSync
+
+#define THROW_NEXT(exp) NOEXCEPT(not (exp))

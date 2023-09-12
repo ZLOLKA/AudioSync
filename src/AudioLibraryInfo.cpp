@@ -1,6 +1,5 @@
 #include "AudioLibraryInfo.hpp"
 
-#include "DebugTools/ASSERT.hpp"
 #include "Settings.hpp"
 
 #include "yaml-cpp/yaml.h"
@@ -27,13 +26,15 @@ auto AudioLibraryInfo::getFileName() const NOEXCEPT_T  //
   return file_name;
 }
 
-auto AudioLibraryInfo::getChilds() const NOEXCEPT_T  //
+auto AudioLibraryInfo::getChilds(
+) const THROW_NEXT(Exceptions<AssertException>)  //
     -> const AudioLibraryInfo::ContainerType& {
   ASSERT(isDir(), "Get childs from BaseAudioInfo variant");
   return std::get<AudioLibraryInfo::ContainerType>(storage);
 }
 
-auto AudioLibraryInfo::getBaseAudioInfo() const NOEXCEPT_T  //
+auto AudioLibraryInfo::getBaseAudioInfo(
+) const THROW_NEXT(Exceptions<AssertException>)  //
     -> const BaseAudioInfo& {
   ASSERT(not isDir(), "Get BaseAudioInfo from directory variant");
   return std::get<BaseAudioInfo>(storage);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BaseAudioInfo.hpp"
+#include "DebugTools/ASSERT.hpp"
 #include "DebugTools/NOEXCEPT.hpp"
 #include "Diff.hpp"
 
@@ -57,10 +58,10 @@ public:
 
   bool isDir() const NOEXCEPT_T;
 
-  auto getChilds() const NOEXCEPT_T  //
+  auto getChilds() const THROW_NEXT(Exceptions<AssertException>)  //
       -> const ContainerType&;
 
-  auto getBaseAudioInfo() const NOEXCEPT_T  //
+  auto getBaseAudioInfo() const THROW_NEXT(Exceptions<AssertException>)  //
       -> const BaseAudioInfo&;
 
 private:
