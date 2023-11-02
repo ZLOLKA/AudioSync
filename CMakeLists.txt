@@ -72,6 +72,7 @@ endif()
 if(NOT DEFINED USE_CHECK_FORMAT)
     set(USE_CHECK_FORMAT 1)
 endif()
+message("USE_CHECK_FORMAT=" ${USE_CHECK_FORMAT} "\n")
 if(USE_CHECK_FORMAT)
     message("\n*** Start checking format process")
     file(GLOB h_files
