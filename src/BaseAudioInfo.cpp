@@ -1,7 +1,8 @@
 #include "BaseAudioInfo.hpp"
 
-#include "yaml-cpp/emitter.h"
-#include "yaml-cpp/emittermanip.h"
+#include "third-party/yaml-cpp/EmitterOperatorLShift.hpp"
+#include "third-party/yaml-cpp/convert.hpp"
+
 #include "yaml-cpp/yaml.h"
 
 namespace AudioSync {
@@ -24,28 +25,3 @@ BaseAudioInfo BaseAudioInfo::deserialize(const YAML::Node& serializedData
 }
 
 }  // namespace AudioSync
-
-namespace YAML {
-
-YAML::Emitter& operator<<(YAML::Emitter& yaml, const AudioSync::BaseAudioInfo& info) {
-  yaml << YAML::BeginMap;
-  yaml << YAML::Key << "author" << YAML::Value << info.author;
-  yaml << YAML::Key << "track_name" << YAML::Value << info.track_name;
-  yaml << YAML::Key << "album" << YAML::Value << info.album;
-  yaml << YAML::EndMap;
-  return yaml;
-}
-
-bool convert<AudioSync::BaseAudioInfo>::decode(
-    const Node& node,
-    AudioSync::BaseAudioInfo& info
-) {
-  if (not node.IsMap())
-    return false;
-
-  info = AudioSync::BaseAudioInfo::deserialize(node);
-
-  return true;
-}
-
-}  // namespace YAML

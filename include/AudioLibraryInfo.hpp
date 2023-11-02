@@ -11,10 +11,6 @@
 #include <variant>
 
 namespace YAML {
-template<class T>
-struct convert;
-
-class Emitter;
 class Node;
 }  // namespace YAML
 
@@ -70,25 +66,3 @@ private:
 };
 
 }  // namespace AudioSync
-
-namespace YAML {
-
-YAML::Emitter& operator<<(
-    YAML::Emitter& yaml,
-    const std::unique_ptr<AudioSync::AudioLibraryInfo>& info_ptr
-);
-
-YAML::Emitter& operator<<(
-    YAML::Emitter& yaml,
-    const AudioSync::AudioLibraryInfo& info
-);
-
-template<>
-struct convert<AudioSync::AudioLibraryInfo::ContainerType> {
-  static bool decode(
-      const Node& node,
-      AudioSync::AudioLibraryInfo::ContainerType& childs
-  );
-};
-
-}  // namespace YAML

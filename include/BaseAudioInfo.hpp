@@ -6,10 +6,6 @@
 #include <string>
 
 namespace YAML {
-template<class T>
-struct convert;
-
-class Emitter;
 class Node;
 }  // namespace YAML
 
@@ -28,14 +24,3 @@ public:
 };
 
 }  // namespace AudioSync
-
-namespace YAML {
-
-YAML::Emitter& operator<<(YAML::Emitter& yaml, const AudioSync::BaseAudioInfo& info);
-
-template<>
-struct convert<AudioSync::BaseAudioInfo> {
-  static bool decode(const Node& node, AudioSync::BaseAudioInfo& childs);
-};
-
-}  // namespace YAML

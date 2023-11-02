@@ -1,6 +1,8 @@
 #include "AudioLibraryInfo.hpp"
 
 #include "Settings.hpp"
+#include "third-party/yaml-cpp/EmitterOperatorLShift.hpp"
+#include "third-party/yaml-cpp/convert.hpp"
 
 #include "yaml-cpp/yaml.h"
 
@@ -81,54 +83,3 @@ AudioLibraryInfo AudioLibraryInfo::deserialize(const YAML::Node& serializedData
 }
 
 }  // namespace AudioSync
-
-namespace YAML {
-
-YAML::Emitter& operator<<(
-    YAML::Emitter& yaml,
-    const std::unique_ptr<AudioSync::AudioLibraryInfo>& info_ptr
-) {
-  yaml << *(info_ptr.get());
-  return yaml;
-}
-
-YAML::Emitter& operator<<(
-    YAML::Emitter& yaml,
-    const AudioSync::AudioLibraryInfo& info
-) {
-  const bool is_dir = info.isDir();
-  yaml << YAML::BeginMap;
-  yaml << YAML::Key << "file_name" << YAML::Value << info.getFileName().string();
-  yaml << YAML::Key << "isDir" << YAML::Value << is_dir;
-  yaml << YAML::Key << "storage" << YAML::Value;
-  if (is_dir) {
-    yaml << info.getChilds();
-  } else {
-    yaml << info.getBaseAudioInfo();
-  }
-  yaml << YAML::EndMap;
-
-  return yaml;
-}
-
-bool convert<AudioSync::AudioLibraryInfo::ContainerType>::decode(
-    const Node& node,
-    AudioSync::AudioLibraryInfo::ContainerType& childs
-) {
-  if (not node.IsSequence())
-    return false;
-
-  for (auto sub_node : node) {
-    if (not node.IsMap())
-      return false;
-
-    auto audio_library = AudioSync::AudioLibraryInfo::deserialize(sub_node);
-    childs.emplace(
-        std::make_unique<AudioSync::AudioLibraryInfo>(std::move(audio_library))
-    );
-  }
-
-  return true;
-}
-
-}  // namespace YAML

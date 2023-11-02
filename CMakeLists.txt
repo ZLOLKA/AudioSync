@@ -7,6 +7,7 @@ cmake_minimum_required(VERSION 3.26)
 project(AudioSync VERSION 0.1 LANGUAGES CXX)
 
 file(GLOB src_files
+    "./src/**/**/*.cpp"
     "./src/**/*.cpp"
     "./src/*.cpp"
 )
@@ -74,6 +75,7 @@ endif()
 if(USE_CHECK_FORMAT)
     message("\n*** Start checking format process")
     file(GLOB h_files
+        "./include/**/**/*.hpp"
         "./include/**/*.hpp"
         "./include/*.hpp"
     )
